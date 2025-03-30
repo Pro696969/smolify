@@ -7,24 +7,12 @@ redis_sentinels = os.environ.get("REDIS_SENTINELS")
 redis_master = os.environ.get("REDIS_MASTER")
 redis_pass = os.environ.get("REDIS_PASSWORD")
 
-# print(f"Redis sentinels: {redis_sentinels}")
-# print(f"Redis master: {redis_master}")
-# print(f"Redis password: {redis_pass}")
-
 sentinels = []
 for s in redis_sentinels.split(","):
     sentinels.append((s.split(":")[0], int(s.split(":")[1])))
 
-# redis server
-# REDIS_HOST = "172.18.0.2" 
-# REDIS_PORT = 6379
-# r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
-
-# sentinel = Sentinel([('172.18.0.5', 5000), ('172.18.0.6', 5000), ('172.18.0.7', 5000)], socket_timeout=0.1)
-
 sentinel = Sentinel(sentinels, socket_timeout=0.1)
 master = sentinel.master_for(redis_master, password=redis_pass, socket_timeout=0.1) # writing
-# master = sentinel.master_for('mymaster',password = "admin", socket_timeout=0.1) # writing
 slave = sentinel.slave_for('mymaster',password = "admin", socket_timeout=0.1)   # reading
 
 app=Flask(__name__)
