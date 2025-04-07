@@ -1,3 +1,5 @@
+## Docker Containerization
+
 ##### building and the Dockerfile itself
 
 ```bash
@@ -49,3 +51,67 @@ docker exec -it redis-0 redis-cli -h 172.18.0.2 -p 6379
 ```bash
 docker run -t -v ${PWD}:/work -p 5000:5000 --net redis -e REDIS_SENTINELS="172.18.0.5:5000, 172.18.0.6:5000, 172.18.0.7:5000" -e REDIS_MASTER="mymaster" -e REDIS_PASSWORD="admin" flasker
 ```
+
+---
+
+## Container Orchestration - Kubernetes
+
+- install [kind](https://kind.sigs.k8s.io/) (Kubernetes IN Docker) <br>
+`kind is a tool for running local Kubernetes clusters using Docker container “nodes”. `
+
+- Create a redis cluster
+```bash
+kind create cluster --name redis --image kindest/node:v1.23.5
+```
+
+- Create a namespace 
+```bash
+kubectl create ns redis
+```
+
+- We will be using the default storage class which is standard, you can check this by 
+```bash
+kind get storageclass
+```
+
+- Deployment of pods
+    - Redis nodes (1 master 2 slaves)
+        ```bash
+        kubectl apply -n redis -f ./kubernetes/redis/redis-configmap.yaml
+        kubectl apply -n redis -f ./kubernetes/redis/redis-statefulset.yaml
+        ```
+    - Redis Sentinel (3 instances)
+        ```bash
+        kubectl apply -n redis -f ./kubernetes/sentinel/sentinel-statefulset.yaml
+        ```
+    - Verify all pods are running 
+        ```bash
+        kubectl -n redis get pods
+        ```
+    You should see 3 redis pods and 3 sentinels so a total of 6 pods should be visible
+
+    - Flask app (3 replicas)
+        ```bash
+        kubectl apply -f flask-app.yaml
+        ```
+        ```bash
+        kubectl get pods # note that this is not inside redis namespace
+        ```
+    You should see 3 flask-app-{random hash} 
+- Port Forward local machine's port to the flask-app service
+```bash
+kubectl port-forward pod/flask-app-xxx 5000:5000
+```
+
+- Manual Monitoring
+    - To check if flask app is receiving requests
+        ```bash
+        kubectl logs <flask-pod-name> # run for all pods one of them will be receiving requests
+        ```
+    - Interactively checking the redis db 
+        ```bash
+        kubectl -n redis exec -it redis-1 -- sh
+        -> redis-cli
+        -> auth admin
+        -> keys *
+        ```
