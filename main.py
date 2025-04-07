@@ -31,7 +31,7 @@ def redis_setup():
     for s in redis_sentinels.split(","):
         sentinels.append((s.split(":")[0], int(s.split(":")[1])))
 
-    sentinel = Sentinel(sentinels, socket_timeout=0.1)
+    sentinel = Sentinel(sentinels, socket_timeout=0.1, port=5000)
     master = sentinel.master_for(redis_master, password=redis_pass, socket_timeout=0.1)   # writing
     # slave = sentinel.slave_for('mymaster',password = "admin", socket_timeout=0.1)       # reading
 
