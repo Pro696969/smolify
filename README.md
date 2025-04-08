@@ -92,12 +92,15 @@ kind get storageclass
 
     - Flask app (3 replicas)
         ```bash
+        kubectl apply -f flask-app-configmap.yaml
+        kubectl apply -f flask-app-secret.yaml
         kubectl apply -f flask-app.yaml
         ```
         ```bash
         kubectl get pods # note that this is not inside redis namespace
         ```
     You should see 3 flask-app-{random hash} 
+
 - Port Forward local machine's port to the flask-app service
 ```bash
 kubectl port-forward pod/flask-app-xxx 5000:5000

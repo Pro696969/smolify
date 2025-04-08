@@ -16,16 +16,26 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: docker.io/pro696969/urlshort:latest 
+        image: docker.io/pro696969/urlshort:latest
         ports:
         - containerPort: 5000
         env:
         - name: REDIS_SENTINELS
-          value: "sentinel-0.sentinel.redis.svc.cluster.local:5000,sentinel-1.sentinel.redis.svc.cluster.local:5000,sentinel-2.sentinel.redis.svc.cluster.local:5000"
+          valueFrom:
+            configMapKeyRef:
+              name: flask-app-configmap
+              key: REDIS_SENTINELS
         - name: REDIS_MASTER
-          value: "mymaster"
+          valueFrom:
+            configMapKeyRef:
+              name: flask-app-configmap
+              key: REDIS_MASTER
         - name: REDIS_PASSWORD
-          value: "admin"
+          valueFrom:
+            secretKeyRef:
+              name: flask-app-secret
+              key: REDIS_PASSWORD
+
 ---
 apiVersion: v1
 kind: Service
