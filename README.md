@@ -92,9 +92,9 @@ kind get storageclass
 
     - Flask app (3 replicas)
         ```bash
-        kubectl apply -f flask-app-configmap.yaml
-        kubectl apply -f flask-app-secret.yaml
-        kubectl apply -f flask-app.yaml
+        kubectl apply -f ./kubernetes/flask/flask-app-configmap.yaml
+        kubectl apply -f ./kubernetes/flask/flask-app-secret.yaml
+        kubectl apply -f ./kubernetes/flask/flask-app.yaml
         ```
         ```bash
         kubectl get pods # note that this is not inside redis namespace
