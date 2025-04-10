@@ -21,6 +21,6 @@ variables. ✅
 
 ## Week 3: Make the system scalable and fault-tolerant.
 -  Task 1: Set up Kubernetes Horizontal Pod Autoscaler (HPA) to scale based on CPU usage. ✅
--  Task 2: Implement Kubernetes Ingress or a LoadBalancer for better traffic routing. 
--  Task 3: Configure Kubernetes Logs and kubectl get pods / logs for monitoring.
--  Task 4: Conduct stress testing to see how the system scales under load.
+-  Task 2: Implement Kubernetes Ingress or a LoadBalancer for better traffic routing.  ✅
+-  Task 3: Configure Kubernetes Logs and kubectl get pods / logs for monitoring. ✅
+-  Task 4: Conduct stress testing to see how the system scales under load. ✅
