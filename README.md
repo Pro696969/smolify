@@ -74,6 +74,11 @@ kubectl create ns redis
 kind get storageclass
 ```
 
+- Apply the kind config so that flask-app ports get exposed properly
+```bash
+kind create cluster --config kind-config.yaml
+```
+
 - Deployment of pods
     - Redis nodes (1 master 2 slaves)
         ```bash
@@ -101,9 +106,25 @@ kind get storageclass
         ```
     You should see 3 flask-app-{random hash} 
 
-- Port Forward local machine's port to the flask-app service
+- Setting up metrics-server (the below command might take sometime so give it ~5mins)
 ```bash
-kubectl port-forward pod/flask-app-xxx 5000:5000
+kubectl apply -f ./metrics-server/metrics-server-deployment.yaml
+```
+- To check if it got deployed correctly
+```bash
+kubectl get deployments -n kube-system
+```
+- Display resource (CPU/memory) usage of pods
+```bash
+kubectl top pods
+```
+```bash
+kubectl describe hpa flask-app
+```
+
+- Port Forward local machine's port to the flask-app service 
+```bash
+kubectl port-forward service/flask-app 5000:5000 # (make sure to access app from http://127.0.0.1:30007/)
 ```
 
 - Manual Monitoring
@@ -118,3 +139,18 @@ kubectl port-forward pod/flask-app-xxx 5000:5000
         -> auth admin
         -> keys *
         ```
+
+- Logs of all flask-app pods
+```bash
+kubectl logs -l app=flask-app --prefix --follow --max-log-requests 10
+```
+## Stress Testing 
+
+- Hitting the / end-point
+```bash
+bash stress-testing/stress_GET.sh
+```
+- Url-shortening
+```bash
+bash stress-testing/stress_POST.sh
+```
