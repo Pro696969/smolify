@@ -64,6 +64,11 @@ docker run -t -v ${PWD}:/work -p 5000:5000 --net redis -e REDIS_SENTINELS="172.1
 kind create cluster --name redis --image kindest/node:v1.23.5
 ```
 
+- Apply the kind config so that flask-app ports get exposed properly
+```bash
+kind create cluster --config kind-config.yaml
+```
+
 - Create a namespace 
 ```bash
 kubectl create ns redis
@@ -74,10 +79,6 @@ kubectl create ns redis
 kind get storageclass
 ```
 
-- Apply the kind config so that flask-app ports get exposed properly
-```bash
-kind create cluster --config kind-config.yaml
-```
 
 - Deployment of pods
     - Redis nodes (1 master 2 slaves)
@@ -108,7 +109,7 @@ kind create cluster --config kind-config.yaml
 
 - Setting up metrics-server (the below command might take sometime so give it ~5mins)
 ```bash
-kubectl apply -f ./metrics-server/metrics-server-deployment.yaml
+kubectl apply -f .kubernetes/metrics-server/metrics-server-deployment.yaml
 ```
 - To check if it got deployed correctly
 ```bash
