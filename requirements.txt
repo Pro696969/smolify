@@ -1,3 +1,4 @@
 flask
 pyshorteners
 redis
+pymongo[srv]

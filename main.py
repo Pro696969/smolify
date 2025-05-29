@@ -5,7 +5,22 @@ from redis import Sentinel
 import redis.exceptions
 import time
 
+import pymongo
+
+kkcol = None
 master = None
+
+def mango_connection():
+    global kkcol
+    db_pass = os.getenv("DB_PASS")
+    uri = f"mongodb+srv://krishnakumaarmc:{db_pass}@shortify.qipw1ll.mongodb.net/?retryWrites=true&w=majority&appName=shortify"
+    myclient = pymongo.MongoClient(uri)
+    kkdb = myclient["shortify"]
+    # print(kkdb.list_collection_names())
+    kkcol = kkdb["shortify"]
+
+def mango_command(big_short_url):
+    kkcol.insert_one(big_short_url)
 
 def redis_command(command, *args):
     max_retries = 3
@@ -37,6 +52,7 @@ def redis_setup():
 
 app=Flask(__name__)
 redis_setup()
+mango_connection()
 
 @app.route("/",methods=['POST','GET'])
 def home():
@@ -46,6 +62,8 @@ def home():
         # master.set(short_url, url_received)
         redis_command(master.set, short_url, url_received)
         print(f"URL: {url_received} has been shortened to {short_url}") # debug print DONT REMOVE
+        mango_json = {url_received: short_url}
+        mango_command(mango_json) 
         return render_template("form.html",new_url=short_url,old_url=url_received)
     else:
         return render_template("form.html")

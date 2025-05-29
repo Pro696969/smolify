@@ -4,7 +4,6 @@
 
 ```bash
 docker build --target dev . -t flasker
-docker run -it -v ${PWD}:/work -p 5000:5000 --net redis flasker sh
 ```
 
 ##### redis clustering
@@ -49,7 +48,7 @@ docker exec -it redis-0 redis-cli -h 172.18.0.2 -p 6379
 
 - running the python container
 ```bash
-docker run -t -v ${PWD}:/work -p 5000:5000 --net redis -e REDIS_SENTINELS="172.18.0.5:5000, 172.18.0.6:5000, 172.18.0.7:5000" -e REDIS_MASTER="mymaster" -e REDIS_PASSWORD="admin" flasker
+docker run -t -v ${PWD}:/work -p 5000:5000 --net redis -e REDIS_SENTINELS="172.18.0.5:5000, 172.18.0.6:5000, 172.18.0.7:5000" -e REDIS_MASTER="mymaster" -e REDIS_PASSWORD="admin" -e DB_PASS="vhOEgZiXgTfd9Z43" flasker
 ```
 
 ---
