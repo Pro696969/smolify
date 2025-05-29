@@ -11,7 +11,7 @@ docker run -it -v ${PWD}:/work -p 5000:5000 --net redis flasker sh
 
 - making use of redis sentinel for high availability
 
-###### how to setup
+##### how to setup
 
 - ensure you are using the same network across to do this 
 ```bash
@@ -155,3 +155,11 @@ bash stress-testing/stress_GET.sh
 ```bash
 bash stress-testing/stress_POST.sh
 ```
+
+
+## Future Work
+- [ ] Secondary db storage- MongoDB
+- [ ] Setup Flunetd for better Log collection
+- [ ] Setup Prometheus and Grafana for monitoring
+- [ ] Setup CI/CD pipeline or Github Actions
+- [ ] Improve Docs, add References
