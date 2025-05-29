@@ -157,7 +157,7 @@ bash stress-testing/stress_POST.sh
 
 
 ## Future Work
-- [ ] Secondary db storage- MongoDB
+- [x] Secondary db storage- MongoDB
 - [ ] Setup Flunetd for better Log collection
 - [ ] Setup Prometheus and Grafana for monitoring
 - [ ] Setup CI/CD pipeline or Github Actions

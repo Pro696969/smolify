@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Animated background elements */
+  body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(1deg); }
+  }
+  
+  h1 {
+    color: white;
+    margin-bottom: 2.5rem;
+    font-size: 3rem;
+    text-align: center;
+    font-weight: 700;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 10;
+  }
+  
+  h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #ff6b6b, #feca57);
+    border-radius: 2px;
+  }
+  
+  form {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
+  }
+  
+  form:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+      0 30px 60px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.3);
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: #4a5568;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.025em;
+  }
+  
+  input {
+    width: 100%;
+    padding: 16px 20px;
+    margin-bottom: 1.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+    color: #2d3748;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #667eea;
+    background-color: white;
+    box-shadow: 
+      0 0 0 4px rgba(102, 126, 234, 0.1),
+      0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  input::placeholder {
+    color: #a0aec0;
+  }
+  
+  input[name="generated_url"] {
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%);
+    border-color: #667eea;
+    font-weight: 600;
+    color: #4c51bf;
+    cursor: text;
+    margin-left: 0 !important;
+    margin-top: 0.5rem !important;
+  }
+  
+  button {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  button:hover::before {
+    left: 100%;
+  }
+  
+  button:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  }
+  
+  button:active {
+    transform: translateY(-1px);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    form {
+      padding: 2rem;
+      margin: 0 10px;
+    }
+    
+    input, button {
+      padding: 14px 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2rem;
+    }
+    
+    form {
+      padding: 1.5rem;
+    }
+  }
+  
+  /* Loading animation for the form */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  
+  .loading {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
