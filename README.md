@@ -75,7 +75,7 @@ kubectl create ns redis
 
 - We will be using the default storage class which is standard, you can check this by 
 ```bash
-kind get storageclass
+kubectl get storageclass
 ```
 
 

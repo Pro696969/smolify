@@ -42,7 +42,11 @@ spec:
             secretKeyRef:
               name: flask-app-secret
               key: REDIS_PASSWORD
-
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: flask-app-secret
+              key: DB_PASS
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
