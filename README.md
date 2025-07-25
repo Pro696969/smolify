@@ -1,3 +1,7 @@
+# smolify - Load Balancer for URL Shortner
+
+## Demo
+https://github.com/user-attachments/assets/4cfe0cb6-33c0-49bc-b88f-943b723bb1d2
 ## Docker Containerization
 
 ##### building and the Dockerfile itself
